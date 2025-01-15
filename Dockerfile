@@ -32,18 +32,18 @@ RUN \
   chown $USER:$GROUP -R "$BIN_DIRECTORY" && \
   rm "/tmp/factorio_archive.tar.gz"
 
-COPY entrypoint.sh "$BIN_DIRECTORY/entrypoint.sh"
+COPY entrypoint.sh "/entrypoint.sh"
 
 RUN \
-  sed "s={{BIN_DIRECTORY}}=$BIN_DIRECTORY=g" "$BIN_DIRECTORY/entrypoint.sh" && \
-  sed "s={{SAVES_DIRECTORY}}=$SAVES_DIRECTORY=g" "$BIN_DIRECTORY/entrypoint.sh" && \
-  sed "s={{SETTINGS_DIRECTORY}}=$SETTINGS_DIRECTORY=g" "$BIN_DIRECTORY/entrypoint.sh" && \
-  sed "s={{LOG_DIRECTORY}}=$LOG_DIRECTORY=g" "$BIN_DIRECTORY/entrypoint.sh" && \
-  sed "s={{USER}}=$USER=g" "$BIN_DIRECTORY/entrypoint.sh" && \
-  sed "s={{GROUP}}=$GROUP=g" "$BIN_DIRECTORY/entrypoint.sh" && \
-  sed "s={{WORLD_NAME}}/=$WORLD_NAME=g" "$BIN_DIRECTORY/entrypoint.sh" && \
-  chmod +x "$BIN_DIRECTORY/entrypoint.sh" && \
-  chown "$USER:$GROUP" "$BIN_DIRECTORY/entrypoint.sh"
+  sed "s={{BIN_DIRECTORY}}=$BIN_DIRECTORY=g" "/entrypoint.sh" && \
+  sed "s={{SAVES_DIRECTORY}}=$SAVES_DIRECTORY=g" "/entrypoint.sh" && \
+  sed "s={{SETTINGS_DIRECTORY}}=$SETTINGS_DIRECTORY=g" "/entrypoint.sh" && \
+  sed "s={{LOG_DIRECTORY}}=$LOG_DIRECTORY=g" "/entrypoint.sh" && \
+  sed "s={{USER}}=$USER=g" "/entrypoint.sh" && \
+  sed "s={{GROUP}}=$GROUP=g" "/entrypoint.sh" && \
+  sed "s={{WORLD_NAME}}/=$WORLD_NAME=g" "/entrypoint.sh" && \
+  chmod +x "/entrypoint.sh" && \
+  chown "$USER:$GROUP" "/entrypoint.sh"
 
 
 COPY map-gen-setting.json $SETTINGS_DIRECTORY/map-gen-setting.json
@@ -60,4 +60,4 @@ EXPOSE 27015/tcp
 VOLUME $SAVES_DIRECTORY
 
 USER $USER
-ENTRYPOINT ["$BIN_DIRECTORY/entrypoint.sh"]
+ENTRYPOINT ["entrypoint.sh"]
