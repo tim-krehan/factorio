@@ -30,6 +30,14 @@ RUN \
   mkdir -p $BIN_DIRECTORY
 
 RUN \
+  pwd && \
+  ls -lash && \
+  ls -lash $SAVES_DIRECTORY && \
+  ls -lash $LOG_DIRECTORY && \
+  ls -lash $SETTINGS_DIRECTORY && \
+  ls -lash $BIN_DIRECTORY
+
+RUN \
   tar -C $BIN_DIRECTORY -xvf factorio_archive.tar.gz && \
   chown $USER:$GROUP -R $BIN_DIRECTORY && \
   rm factorio_archive.tar.gz
@@ -37,13 +45,13 @@ RUN \
 COPY entrypoint.sh $BIN_DIRECTORY/entrypoint.sh
 
 RUN \
-  sed s/{{BIN_DIRECTORY}}/$BIN_DIRECTORY/g $BIN_DIRECTORY/entrypoint.sh && \
-  sed s/{{SAVES_DIRECTORY}}/$SAVES_DIRECTORY/g $BIN_DIRECTORY/entrypoint.sh && \
-  sed s/{{SETTINGS_DIRECTORY}}/$SETTINGS_DIRECTORY/g $BIN_DIRECTORY/entrypoint.sh && \
-  sed s/{{LOG_DIRECTORY}}/$LOG_DIRECTORY/g $BIN_DIRECTORY/entrypoint.sh && \
-  sed s/{{USER}}/$USER/g $BIN_DIRECTORY/entrypoint.sh && \
-  sed s/{{GROUP}}/$GROUP/g $BIN_DIRECTORY/entrypoint.sh && \
-  sed s/{{WORLD_NAME}}//$WORLD_NAME/g $BIN_DIRECTORY/entrypoint.sh && \
+  sed s={{BIN_DIRECTORY}}=$BIN_DIRECTORY=g $BIN_DIRECTORY/entrypoint.sh && \
+  sed s={{SAVES_DIRECTORY}}=$SAVES_DIRECTORY=g $BIN_DIRECTORY/entrypoint.sh && \
+  sed s={{SETTINGS_DIRECTORY}}=$SETTINGS_DIRECTORY=g $BIN_DIRECTORY/entrypoint.sh && \
+  sed s={{LOG_DIRECTORY}}=$LOG_DIRECTORY=g $BIN_DIRECTORY/entrypoint.sh && \
+  sed s={{USER}}=$USER=g $BIN_DIRECTORY/entrypoint.sh && \
+  sed s={{GROUP}}=$GROUP=g $BIN_DIRECTORY/entrypoint.sh && \
+  sed s={{WORLD_NAME}}/=$WORLD_NAME=g $BIN_DIRECTORY/entrypoint.sh && \
   chmod +x $BIN_DIRECTORY/entrypoint.sh && \
   chown $USER:$GROUP $BIN_DIRECTORY/entrypoint.sh
 
