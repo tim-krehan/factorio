@@ -14,7 +14,7 @@ ARG WORLD_NAME=factorio
 LABEL appversion=$VERSION
 
 
-RUN useradd --no-create-home --disabled-password --shell /bin/sh --gid $GROUP $USER
+RUN useradd --no-create-home --shell /bin/sh --gid $GROUP $USER
 
 RUN \
   curl https://www.factorio.com/get-download/$VERSION/headless/linux64 -Lo /tmp/factorio_archive.tar.gz && \
