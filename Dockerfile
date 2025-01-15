@@ -1,0 +1,80 @@
+ARG BASEIMAGENAME=ubuntu
+ARG BASEIMAGETAG=24.04
+
+FROM $BASEIMAGENAME:$BASEIMAGETAG
+LABEL $BASEIMAGENAME:$BASEIMAGETAG
+
+ARG USER=factorio
+ARG GROUP=factorio
+ARG VERSION=2.0.30
+
+ARG SAVES_DIRECTORY=/var/factorio/saves
+ARG LOG_DIRECTORY=/var/log/factorio
+ARG SETTINGS_DIRECTORY=/etc/factorio
+ARG BIN_DIRECTORY=/opt/factorio
+
+ARG WORLD_NAME=factorio
+
+LABEL $VERSION
+
+
+RUN addgroup --system "$GROUP" \
+    && adduser --system --no-create-home --disabled-password --shell /bin/sh "$USER"
+
+RUN \
+  curl https://www.factorio.com/get-download/$VERSION/headless/linux64 -Lo /tmp/factorio_archive.tar.gz && \
+  mkdir $SAVES_DIRECTORY && \
+  chown $USER:$GROUP -R $SAVES_DIRECTORY && \
+  mkdir $LOG_DIRECTORY && \
+  chown $USER:$GROUP -R $LOG_DIRECTORY && \
+  mkdir $SETTINGS_DIRECTORY && \
+  chown $USER:$GROUP -R $SETTINGS_DIRECTORY && \
+  mkdir $BIN_DIRECTORY && \
+  tar -xvf /tmp/factorio_archive.tar.gz && \
+  chown $USER:$GROUP -R $BIN_DIRECTORY && \
+  rm /tmp/factorio_archive.tar.gz
+
+COPY entrypoint.sh $BIN_DIRECTORY/entrypoint.sh
+
+RUN \
+  sed s/{{BIN_DIRECTORY}}/$BIN_DIRECTORY/g $BIN_DIRECTORY/entrypoint.sh && \
+  sed s/{{SAVES_DIRECTORY}}/$SAVES_DIRECTORY/g $BIN_DIRECTORY/entrypoint.sh && \
+  sed s/{{SETTINGS_DIRECTORY}}/$SETTINGS_DIRECTORY/g $BIN_DIRECTORY/entrypoint.sh && \
+  sed s/{{USER}}/$USER/g $BIN_DIRECTORY/entrypoint.sh && \
+  sed s/{{GROUP}}/$GROUP/g $BIN_DIRECTORY/entrypoint.sh && \
+  sed s/{{WORLD_NAME}}//$WORLD_NAME/g $BIN_DIRECTORY/entrypoint.sh
+
+
+COPY map-gen-setting.json $SETTINGS_DIRECTORY/map-gen-setting.json
+
+COPY server-settings.json $SETTINGS_DIRECTORY/server-settings.json
+COPY server-whitelist.json $SETTINGS_DIRECTORY/server-whitelist.json
+COPY server-adminlist.json $SETTINGS_DIRECTORY/server-adminlist.json
+
+COPY mod-list.json $BIN_DIRECTORY/mod-list.json
+
+EXPOSE 34197/udp
+EXPOSE 27015/tcp
+
+VOLUME $SAVES_DIRECTORY
+
+USER $USER
+ENTRYPOINT $BIN_DIRECTORY/entrypoint.sh
+CMD [
+  "--start-server",
+  "$SAVES_DIRECTORY/$WORLD_NAME.zip",
+
+  "--server-settings",
+  "$SETTINGS_DIRECTORY/server-settings.json",
+
+  "--use-server-whitelist",
+  "$SETTINGS_DIRECTORY/server-whitelist.json",
+
+  "--server-adminlist",
+  "$SETTINGS_DIRECTORY/server-adminlist.json",
+
+  "--console-log",
+  "$LOG_DIRECTORY/$WORLD_NAME.log",
+
+  "--verbose"
+]
