@@ -16,5 +16,5 @@ spec:
         app: factorio
     spec:
       containers:
-        - image: ghcr.io/tim-krehan/factorio:0.0.27
+        - image: ghcr.io/tim-krehan/factorio:0.0.28
           name: factorio
