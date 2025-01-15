@@ -6,14 +6,14 @@ echo "save directory is '$factoriosave'"
 
 if [ ! -f "$factoriosave" ]; then
   echo "generating world"
-  exec $BIN_DIRECTORY/factorio/bin/x64/factorio \
+  . $BIN_DIRECTORY/factorio/bin/x64/factorio \
     -map-gen-settings '$SETTINGS_DIRECTORY/map-gen-setting.json' \
     --create "$factoriosave"
 
   chown $USER:$GROUP "$factoriosave"
 fi
 
-exec $BIN_DIRECTORY/factorio/bin/x64/factorio \
+. $BIN_DIRECTORY/factorio/bin/x64/factorio \
   --start-server \
   $SAVES_DIRECTORY/$WORLD_NAME.zip \
   --server-settings \
