@@ -60,4 +60,4 @@ EXPOSE 27015/tcp
 VOLUME $SAVES_DIRECTORY
 
 USER $USER
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
