@@ -27,7 +27,8 @@ RUN \
   chown $USER:$GROUP -R $LOG_DIRECTORY && \
   mkdir -p $SETTINGS_DIRECTORY && \
   chown $USER:$GROUP -R $SETTINGS_DIRECTORY && \
-  mkdir -p $BIN_DIRECTORY
+  mkdir -p $BIN_DIRECTORY && \
+  ls /tmp/fac*
 
 RUN \
   tar -C $BIN_DIRECTORY -xvf /tmp/factorio_archive.tar.gz && \
