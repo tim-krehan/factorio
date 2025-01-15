@@ -1,3 +1,5 @@
+#!/bin/sh
+
 factoriosave="{{SAVES_DIRECTORY}}/{{WORLD_NAME}}.zip"
 
 if [ ! -f "$factoriosave" ]; then
@@ -6,7 +8,7 @@ if [ ! -f "$factoriosave" ]; then
     -map-gen-settings '{{SETTINGS_DIRECTORY}}/map-gen-setting.json' \
     --create "$factoriosave"
 
-  chmod {{USER}}:{{GROUP}} "$factoriosave"
+  chown {{USER}}:{{GROUP}} "$factoriosave"
 fi
 
 exec {{BIN_DIRECTORY}}/factorio/bin/x64/factorio \
@@ -20,4 +22,4 @@ exec {{BIN_DIRECTORY}}/factorio/bin/x64/factorio \
   {{SETTINGS_DIRECTORY}}/server-adminlist.json \
   --console-log \
   {{LOG_DIRECTORY}}/{{WORLD_NAME}}.log \
-  --verbose \
+  --verbose
