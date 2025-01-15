@@ -30,7 +30,7 @@ RUN \
   mkdir -p $BIN_DIRECTORY && \
   tar -C "$BIN_DIRECTORY" -xf "/tmp/factorio_archive.tar.gz" && \
   chown $USER:$GROUP -R "$BIN_DIRECTORY" && \
-  chmod +x "$BIN_DIRECTORY/bin/x64/factorio" && \
+  chmod +x "$BIN_DIRECTORY/factorio/bin/x64/factorio" && \
   rm "/tmp/factorio_archive.tar.gz"
 
 COPY entrypoint.sh "/entrypoint.sh"

@@ -9,7 +9,7 @@ if [ ! -f "$factoriosave" ]; then
   chmod {{USER}}:{{GROUP}} "$factoriosave"
 fi
 
-exec {{BIN_DIRECTORY}}/bin/x64/factorio \
+exec {{BIN_DIRECTORY}}/factorio/bin/x64/factorio \
   --start-server \
   {{SAVES_DIRECTORY}}/{{WORLD_NAME}}.zip \
   --server-settings \
