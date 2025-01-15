@@ -28,7 +28,7 @@ RUN \
   mkdir -p $SETTINGS_DIRECTORY && \
   chown $USER:$GROUP -R $SETTINGS_DIRECTORY && \
   mkdir -p $BIN_DIRECTORY && \
-  tar -C "$BIN_DIRECTORY" -xvf "/tmp/factorio_archive.tar.gz" && \
+  tar -C "$BIN_DIRECTORY" -xf "/tmp/factorio_archive.tar.gz" && \
   chown $USER:$GROUP -R "$BIN_DIRECTORY" && \
   rm "/tmp/factorio_archive.tar.gz"
 
