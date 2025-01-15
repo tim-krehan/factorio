@@ -2,9 +2,11 @@
 
 factoriosave="{{SAVES_DIRECTORY}}/{{WORLD_NAME}}.zip"
 
+echo "save directory is '$factoriosave'"
+
 if [ ! -f "$factoriosave" ]; then
   echo "generating world"
-  exec {{BIN_DIRECTORY}}/bin/x64/factorio \
+  exec {{BIN_DIRECTORY}}/factorio/bin/x64/factorio \
     -map-gen-settings '{{SETTINGS_DIRECTORY}}/map-gen-setting.json' \
     --create "$factoriosave"
 

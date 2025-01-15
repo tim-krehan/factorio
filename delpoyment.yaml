@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: factorio
+  name: factorio
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: factorio
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: factorio
+    spec:
+      containers:
+        - image: ghcr.io/tim-krehan/factorio:0.0.26
+          name: factorio
