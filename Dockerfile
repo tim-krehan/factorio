@@ -18,8 +18,8 @@ RUN groupadd $GROUP && \
   useradd --no-create-home --shell /bin/sh --gid $GROUP $USER
 
 RUN \
-  apt update && apt upgrade && \
-  apt install curl && \
+  apt update && apt upgrade -y && \
+  apt install curl -y && \
   curl https://www.factorio.com/get-download/$VERSION/headless/linux64 -Lo /tmp/factorio_archive.tar.gz && \
   mkdir $SAVES_DIRECTORY && \
   chown $USER:$GROUP -R $SAVES_DIRECTORY && \
