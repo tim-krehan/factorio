@@ -19,7 +19,7 @@ RUN groupadd $GROUP && \
 
 RUN \
   apt update && apt upgrade -y && \
-  apt install curl -y && \
+  apt install curl xz-utils -y && \
   curl "https://www.factorio.com/get-download/$VERSION/headless/linux64" -SsLo "/tmp/factorio_archive.tar.gz" && \
   mkdir -p $SAVES_DIRECTORY && \
   chown $USER:$GROUP -R $SAVES_DIRECTORY && \
