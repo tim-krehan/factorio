@@ -20,20 +20,19 @@ RUN groupadd $GROUP && \
 RUN \
   apt update && apt upgrade -y && \
   apt install curl -y && \
-  curl https://www.factorio.com/get-download/$VERSION/headless/linux64 -SsLo /tmp/factorio_archive.tar.gz && \
+  curl "https://www.factorio.com/get-download/$VERSION/headless/linux64" -SsLo "factorio_archive.tar.gz" && \
   mkdir -p $SAVES_DIRECTORY && \
   chown $USER:$GROUP -R $SAVES_DIRECTORY && \
   mkdir -p $LOG_DIRECTORY && \
   chown $USER:$GROUP -R $LOG_DIRECTORY && \
   mkdir -p $SETTINGS_DIRECTORY && \
   chown $USER:$GROUP -R $SETTINGS_DIRECTORY && \
-  mkdir -p $BIN_DIRECTORY && \
-  ls /tmp/fac*
+  mkdir -p $BIN_DIRECTORY
 
 RUN \
-  tar -C $BIN_DIRECTORY -xvf /tmp/factorio_archive.tar.gz && \
+  tar -C $BIN_DIRECTORY -xvf factorio_archive.tar.gz && \
   chown $USER:$GROUP -R $BIN_DIRECTORY && \
-  rm /tmp/factorio_archive.tar.gz
+  rm factorio_archive.tar.gz
 
 COPY entrypoint.sh $BIN_DIRECTORY/entrypoint.sh
 
