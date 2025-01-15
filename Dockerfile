@@ -20,7 +20,7 @@ RUN groupadd $GROUP && \
 RUN \
   apt update && apt upgrade -y && \
   apt install curl -y && \
-  curl https://www.factorio.com/get-download/$VERSION/headless/linux64 -Lo /tmp/factorio_archive.tar.gz && \
+  curl https://www.factorio.com/get-download/$VERSION/headless/linux64 -SsLo /tmp/factorio_archive.tar.gz && \
   mkdir -p $SAVES_DIRECTORY && \
   chown $USER:$GROUP -R $SAVES_DIRECTORY && \
   mkdir -p $LOG_DIRECTORY && \
@@ -28,6 +28,7 @@ RUN \
   mkdir -p $SETTINGS_DIRECTORY && \
   chown $USER:$GROUP -R $SETTINGS_DIRECTORY && \
   mkdir -p $BIN_DIRECTORY && \
+  cd $BIN_DIRECTORY && \
   tar -xvf /tmp/factorio_archive.tar.gz && \
   chown $USER:$GROUP -R $BIN_DIRECTORY && \
   rm /tmp/factorio_archive.tar.gz
