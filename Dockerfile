@@ -42,7 +42,9 @@ RUN \
   sed s/{{SETTINGS_DIRECTORY}}/$SETTINGS_DIRECTORY/g $BIN_DIRECTORY/entrypoint.sh && \
   sed s/{{USER}}/$USER/g $BIN_DIRECTORY/entrypoint.sh && \
   sed s/{{GROUP}}/$GROUP/g $BIN_DIRECTORY/entrypoint.sh && \
-  sed s/{{WORLD_NAME}}//$WORLD_NAME/g $BIN_DIRECTORY/entrypoint.sh
+  sed s/{{WORLD_NAME}}//$WORLD_NAME/g $BIN_DIRECTORY/entrypoint.sh && \
+  chmod +x $BIN_DIRECTORY/entrypoint.sh && \
+  chown $USER:$GROUP $BIN_DIRECTORY/entrypoint.sh
 
 
 COPY map-gen-setting.json $SETTINGS_DIRECTORY/map-gen-setting.json
@@ -59,7 +61,7 @@ EXPOSE 27015/tcp
 VOLUME $SAVES_DIRECTORY
 
 USER $USER
-ENTRYPOINT $BIN_DIRECTORY/entrypoint.sh
+ENTRYPOINT ["$BIN_DIRECTORY/entrypoint.sh"]
 CMD [
   "--start-server",
   "$SAVES_DIRECTORY/$WORLD_NAME.zip",
