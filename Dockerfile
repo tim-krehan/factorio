@@ -36,15 +36,16 @@ RUN \
 COPY entrypoint.sh "/entrypoint.sh"
 
 RUN \
-  sed "s={{BIN_DIRECTORY}}=$BIN_DIRECTORY=g" "/entrypoint.sh" && \
-  sed "s={{SAVES_DIRECTORY}}=$SAVES_DIRECTORY=g" "/entrypoint.sh" && \
-  sed "s={{SETTINGS_DIRECTORY}}=$SETTINGS_DIRECTORY=g" "/entrypoint.sh" && \
-  sed "s={{LOG_DIRECTORY}}=$LOG_DIRECTORY=g" "/entrypoint.sh" && \
-  sed "s={{USER}}=$USER=g" "/entrypoint.sh" && \
-  sed "s={{GROUP}}=$GROUP=g" "/entrypoint.sh" && \
-  sed "s={{WORLD_NAME}}/=$WORLD_NAME=g" "/entrypoint.sh" && \
+  sed s={{BIN_DIRECTORY}}=$BIN_DIRECTORY=g /entrypoint.sh && \
+  sed s={{SAVES_DIRECTORY}}=$SAVES_DIRECTORY=g /entrypoint.sh && \
+  sed s={{SETTINGS_DIRECTORY}}=$SETTINGS_DIRECTORY=g /entrypoint.sh && \
+  sed s={{LOG_DIRECTORY}}=$LOG_DIRECTORY=g /entrypoint.sh && \
+  sed s={{USER}}=$USER=g /entrypoint.sh && \
+  sed s={{GROUP}}=$GROUP=g /entrypoint.sh && \
+  sed s={{WORLD_NAME}}/=$WORLD_NAME=g /entrypoint.sh && \
   chmod +x "/entrypoint.sh" && \
-  chown "$USER:$GROUP" "/entrypoint.sh"
+  chown "$USER:$GROUP" "/entrypoint.sh" && \
+  cat /entrypoint.sh
 
 
 COPY map-gen-setting.json $SETTINGS_DIRECTORY/map-gen-setting.json
