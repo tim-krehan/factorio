@@ -40,6 +40,7 @@ RUN \
   sed s/{{BIN_DIRECTORY}}/$BIN_DIRECTORY/g $BIN_DIRECTORY/entrypoint.sh && \
   sed s/{{SAVES_DIRECTORY}}/$SAVES_DIRECTORY/g $BIN_DIRECTORY/entrypoint.sh && \
   sed s/{{SETTINGS_DIRECTORY}}/$SETTINGS_DIRECTORY/g $BIN_DIRECTORY/entrypoint.sh && \
+  sed s/{{LOG_DIRECTORY}}/$LOG_DIRECTORY/g $BIN_DIRECTORY/entrypoint.sh && \
   sed s/{{USER}}/$USER/g $BIN_DIRECTORY/entrypoint.sh && \
   sed s/{{GROUP}}/$GROUP/g $BIN_DIRECTORY/entrypoint.sh && \
   sed s/{{WORLD_NAME}}//$WORLD_NAME/g $BIN_DIRECTORY/entrypoint.sh && \
@@ -62,21 +63,3 @@ VOLUME $SAVES_DIRECTORY
 
 USER $USER
 ENTRYPOINT ["$BIN_DIRECTORY/entrypoint.sh"]
-CMD [
-  "--start-server",
-  "$SAVES_DIRECTORY/$WORLD_NAME.zip",
-
-  "--server-settings",
-  "$SETTINGS_DIRECTORY/server-settings.json",
-
-  "--use-server-whitelist",
-  "$SETTINGS_DIRECTORY/server-whitelist.json",
-
-  "--server-adminlist",
-  "$SETTINGS_DIRECTORY/server-adminlist.json",
-
-  "--console-log",
-  "$LOG_DIRECTORY/$WORLD_NAME.log",
-
-  "--verbose"
-]

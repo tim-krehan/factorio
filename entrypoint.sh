@@ -9,4 +9,15 @@ if [ ! -f "$factoriosave" ]; then
   chmod {{USER}}:{{GROUP}} "$factoriosave"
 fi
 
-exec {{BIN_DIRECTORY}}/bin/x64/factorio "$@"
+exec {{BIN_DIRECTORY}}/bin/x64/factorio \
+  --start-server \
+  {{SAVES_DIRECTORY}}/{{WORLD_NAME}}.zip \
+  --server-settings \
+  {{SETTINGS_DIRECTORY}}/server-settings.json \
+  --use-server-whitelist \
+  {{SETTINGS_DIRECTORY}}/server-whitelist.json \
+  --server-adminlist \
+  {{SETTINGS_DIRECTORY}}/server-adminlist.json \
+  --console-log \
+  {{LOG_DIRECTORY}}/{{WORLD_NAME}}.log \
+  --verbose \
