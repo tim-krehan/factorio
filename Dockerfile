@@ -27,17 +27,10 @@ RUN \
   chown $USER:$GROUP -R $LOG_DIRECTORY && \
   mkdir -p $SETTINGS_DIRECTORY && \
   chown $USER:$GROUP -R $SETTINGS_DIRECTORY && \
-  mkdir -p $BIN_DIRECTORY
-
-RUN \
-  ls -lash /tmp/ && \
-  echo "$BIN_DIRECTORY" && \
-  ls -lash "$BIN_DIRECTORY"
-
-RUN \
+  mkdir -p $BIN_DIRECTORY && \
   tar -C "$BIN_DIRECTORY" -xvf "/tmp/factorio_archive.tar.gz" && \
   chown $USER:$GROUP -R "$BIN_DIRECTORY" && \
-  rm "factorio_archive.tar.gz"
+  rm "/tmp/factorio_archive.tar.gz"
 
 COPY entrypoint.sh "$BIN_DIRECTORY/entrypoint.sh"
 
