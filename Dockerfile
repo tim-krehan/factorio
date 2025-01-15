@@ -27,9 +27,10 @@ RUN \
   chown $USER:$GROUP -R $LOG_DIRECTORY && \
   mkdir -p $SETTINGS_DIRECTORY && \
   chown $USER:$GROUP -R $SETTINGS_DIRECTORY && \
-  mkdir -p $BIN_DIRECTORY && \
-  cd $BIN_DIRECTORY && \
-  tar -xvf /tmp/factorio_archive.tar.gz && \
+  mkdir -p $BIN_DIRECTORY
+
+RUN \
+  tar -c $BIN_DIRECTORY -xvf /tmp/factorio_archive.tar.gz && \
   chown $USER:$GROUP -R $BIN_DIRECTORY && \
   rm /tmp/factorio_archive.tar.gz
 
