@@ -1,8 +1,4 @@
-ARG BASEIMAGENAME=ubuntu
-ARG BASEIMAGETAG=24.04
-
-FROM $BASEIMAGENAME:$BASEIMAGETAG
-LABEL baseimage=$BASEIMAGENAME:$BASEIMAGETAG
+FROM docker.io/library/ubuntu:24.04
 
 ARG USER=factorio
 ARG GROUP=factorio
@@ -18,8 +14,7 @@ ARG WORLD_NAME=factorio
 LABEL appversion=$VERSION
 
 
-RUN addgroup --system "$GROUP" \
-    && adduser --system --no-create-home --disabled-password --shell /bin/sh "$USER"
+RUN useradd --no-create-home --disabled-password --shell /bin/sh --gid $GROUP $USER
 
 RUN \
   curl https://www.factorio.com/get-download/$VERSION/headless/linux64 -Lo /tmp/factorio_archive.tar.gz && \
