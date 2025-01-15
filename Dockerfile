@@ -20,7 +20,7 @@ RUN groupadd $GROUP && \
 RUN \
   apt update && apt upgrade -y && \
   apt install curl -y && \
-  curl "https://www.factorio.com/get-download/$VERSION/headless/linux64" -SsLo "factorio_archive.tar.gz" && \
+  curl "https://www.factorio.com/get-download/$VERSION/headless/linux64" -SsLo "/tmp/factorio_archive.tar.gz" && \
   mkdir -p $SAVES_DIRECTORY && \
   chown $USER:$GROUP -R $SAVES_DIRECTORY && \
   mkdir -p $LOG_DIRECTORY && \
@@ -30,30 +30,29 @@ RUN \
   mkdir -p $BIN_DIRECTORY
 
 RUN \
-  pwd && \
-  ls -lash && \
-  ls -lash $SAVES_DIRECTORY && \
-  ls -lash $LOG_DIRECTORY && \
-  ls -lash $SETTINGS_DIRECTORY && \
-  ls -lash $BIN_DIRECTORY
+  cat "/tmp/factorio_archive.tar.gz" && \
+  echo "/tmp/" && \
+  ls -lash /tmp/ && \
+  echo "$BIN_DIRECTORY" && \
+  ls -lash "$BIN_DIRECTORY"
 
 RUN \
-  tar -C $BIN_DIRECTORY -xvf factorio_archive.tar.gz && \
-  chown $USER:$GROUP -R $BIN_DIRECTORY && \
-  rm factorio_archive.tar.gz
+  tar -C "$BIN_DIRECTORY" -xvf "/tmp/factorio_archive.tar.gz" && \
+  chown $USER:$GROUP -R "$BIN_DIRECTORY" && \
+  rm "factorio_archive.tar.gz"
 
-COPY entrypoint.sh $BIN_DIRECTORY/entrypoint.sh
+COPY entrypoint.sh "$BIN_DIRECTORY/entrypoint.sh"
 
 RUN \
-  sed s={{BIN_DIRECTORY}}=$BIN_DIRECTORY=g $BIN_DIRECTORY/entrypoint.sh && \
-  sed s={{SAVES_DIRECTORY}}=$SAVES_DIRECTORY=g $BIN_DIRECTORY/entrypoint.sh && \
-  sed s={{SETTINGS_DIRECTORY}}=$SETTINGS_DIRECTORY=g $BIN_DIRECTORY/entrypoint.sh && \
-  sed s={{LOG_DIRECTORY}}=$LOG_DIRECTORY=g $BIN_DIRECTORY/entrypoint.sh && \
-  sed s={{USER}}=$USER=g $BIN_DIRECTORY/entrypoint.sh && \
-  sed s={{GROUP}}=$GROUP=g $BIN_DIRECTORY/entrypoint.sh && \
-  sed s={{WORLD_NAME}}/=$WORLD_NAME=g $BIN_DIRECTORY/entrypoint.sh && \
-  chmod +x $BIN_DIRECTORY/entrypoint.sh && \
-  chown $USER:$GROUP $BIN_DIRECTORY/entrypoint.sh
+  sed "s={{BIN_DIRECTORY}}=$BIN_DIRECTORY=g" "$BIN_DIRECTORY/entrypoint.sh" && \
+  sed "s={{SAVES_DIRECTORY}}=$SAVES_DIRECTORY=g" "$BIN_DIRECTORY/entrypoint.sh" && \
+  sed "s={{SETTINGS_DIRECTORY}}=$SETTINGS_DIRECTORY=g" "$BIN_DIRECTORY/entrypoint.sh" && \
+  sed "s={{LOG_DIRECTORY}}=$LOG_DIRECTORY=g" "$BIN_DIRECTORY/entrypoint.sh" && \
+  sed "s={{USER}}=$USER=g" "$BIN_DIRECTORY/entrypoint.sh" && \
+  sed "s={{GROUP}}=$GROUP=g" "$BIN_DIRECTORY/entrypoint.sh" && \
+  sed "s={{WORLD_NAME}}/=$WORLD_NAME=g" "$BIN_DIRECTORY/entrypoint.sh" && \
+  chmod +x "$BIN_DIRECTORY/entrypoint.sh" && \
+  chown "$USER:$GROUP" "$BIN_DIRECTORY/entrypoint.sh"
 
 
 COPY map-gen-setting.json $SETTINGS_DIRECTORY/map-gen-setting.json
