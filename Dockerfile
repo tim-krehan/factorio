@@ -30,7 +30,7 @@ RUN \
   mkdir -p $BIN_DIRECTORY
 
 RUN \
-  tar -c $BIN_DIRECTORY -xvf /tmp/factorio_archive.tar.gz && \
+  tar -C $BIN_DIRECTORY -xvf /tmp/factorio_archive.tar.gz && \
   chown $USER:$GROUP -R $BIN_DIRECTORY && \
   rm /tmp/factorio_archive.tar.gz
 
