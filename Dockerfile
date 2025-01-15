@@ -30,8 +30,6 @@ RUN \
   mkdir -p $BIN_DIRECTORY
 
 RUN \
-  cat "/tmp/factorio_archive.tar.gz" && \
-  echo "/tmp/" && \
   ls -lash /tmp/ && \
   echo "$BIN_DIRECTORY" && \
   ls -lash "$BIN_DIRECTORY"
