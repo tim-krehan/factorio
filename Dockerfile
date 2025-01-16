@@ -44,16 +44,16 @@ RUN groupadd $GROUP && \
   mkdir -p $LOG_DIRECTORY && \
   mkdir -p $SETTINGS_DIRECTORY && \
   mkdir -p $BIN_DIRECTORY && \
-  # set folder permissions
-  chown $USER:$GROUP -R $SAVES_DIRECTORY $LOG_DIRECTORY $SETTINGS_DIRECTORY $BIN_DIRECTORY && \
-  # make entrypoint executable & set it's permissions
-  chmod +x "/entrypoint.sh" && \
-  chown "$USER:$GROUP" "/entrypoint.sh" && \
   # download binary
   curl "https://www.factorio.com/get-download/$VERSION/headless/linux64" -SsLo "/tmp/factorio_archive.tar.gz" && \
   # extract it to binary dir
   tar -C "$BIN_DIRECTORY" -xf "/tmp/factorio_archive.tar.gz" && \
-  # set permissions
+  # make entrypoint executable & set it's permissions
+  chmod +x "/entrypoint.sh" && \
+  chown "$USER:$GROUP" "/entrypoint.sh" && \
+  # set folder permissions
+  chown $USER:$GROUP -R $SAVES_DIRECTORY $LOG_DIRECTORY $SETTINGS_DIRECTORY $BIN_DIRECTORY && \
+  #set binary permissions
   chmod +x "$BIN_DIRECTORY/factorio/bin/x64/factorio" && \
   # remove downloaded zipfile
   rm "/tmp/factorio_archive.tar.gz"
