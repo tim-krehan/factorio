@@ -3,18 +3,20 @@
 factoriosave="$SAVES_DIRECTORY/$WORLD_NAME.zip"
 
 echo "save directory is '$factoriosave'"
+cd $BIN_DIRECTORY
 
 if [ ! -f "$factoriosave" ]; then
   echo "generating world"
-  . $BIN_DIRECTORY/factorio/bin/x64/factorio \
+  ./factorio/bin/x64/factorio \
     -map-gen-settings '$SETTINGS_DIRECTORY/map-gen-setting.json' \
-    --create "$factoriosave"
+    --create "$factoriosave" \
+    --verbose
 
   echo "setting ownership to $USER:$GROUP"
   chown $USER:$GROUP "$factoriosave"
 fi
 
-start $BIN_DIRECTORY/factorio/bin/x64/factorio \
+./factorio/bin/x64/factorio \
   --start-server \
   $SAVES_DIRECTORY/$WORLD_NAME.zip \
   --server-settings \
