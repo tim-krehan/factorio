@@ -1,10 +1,11 @@
 FROM docker.io/library/ubuntu:24.04
 
-ARG VERSION=2.0.30
+ARG VERSION=2.0.28
 ARG WORLD_NAME=factorio
 
 ARG USER=factorio
-ARG GROUP=factorio
+ARG USERID=1337
+ARG GROUP=1337
 
 ARG SAVES_DIRECTORY=/var/factorio/saves
 ARG LOG_DIRECTORY=/var/log/factorio
@@ -35,7 +36,7 @@ VOLUME $SAVES_DIRECTORY
 
 # create user & group
 RUN groupadd $GROUP && \
-  useradd --no-create-home --shell /bin/sh --gid $GROUP $USER && \
+  useradd --no-create-home --shell /bin/sh --uid $USERID --gid $GROUP $USER && \
   # install nessecary dependencies
   apt update && apt upgrade -y && \
   apt install curl xz-utils -y && \
