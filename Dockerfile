@@ -5,7 +5,7 @@ ARG WORLD_NAME=factorio
 
 ARG USER=factorio
 ARG USERID=1337
-ARG GROUP=1337
+ARG GROUP=factorio
 
 ARG SAVES_DIRECTORY=/var/factorio/saves
 ARG LOG_DIRECTORY=/var/log/factorio
